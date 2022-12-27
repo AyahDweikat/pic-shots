@@ -1,3 +1,56 @@
-body{
-    background-color: black;
+$colorOne:#243763;
+$colorTwo:#FF6E31;//pics
+$colorThree:#AD8E70;
+$colorFour:#ffebb7;
+$colorFive:rgb(255, 235, 183, 0.4);
+
+.login{
+    background-color: $colorFour;
+    display: flex;
+    justify-content: center;
+    // padding-top: 30px;
+    align-items: center;
+    height: 100vh;
+    .loginCard{
+        background-color: $colorOne;
+        width:40%;
+        margin: auto;
+        border: 1px solid #000;
+        display: flex;
+        justify-content: center;
+        padding: 50px 10px;
+        border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -ms-border-radius: 10px;
+        -o-border-radius: 10px;
+        .formCard{
+            width: 90%;
+            margin: auto;
+            label{
+                // background-color: $colorThree;
+                padding: 10px;
+                margin-top: 20px;
+                text-align: left;
+                color: $colorFour;
+                font-family: 'Andika', sans-serif;
+                font-size: 18px;
+                // border-radius: 10px;
+                // -webkit-border-radius: 10px;
+                // -moz-border-radius: 10px;
+                // -ms-border-radius: 10px;
+                // -o-border-radius: 10px;
+            }
+            input{
+                background-color: $colorThree !important;
+            }
+            .btnSubmit{
+                background-color:$colorTwo;
+                color: $colorOne;
+                font-family: 'Andika', sans-serif;
+                font-size: 18px;
+            }
+        }
+    }
 }
+

@@ -1,27 +1,33 @@
-import React, { useContext } from 'react'
-import { GlobalContext } from '../../Context/Context';
+import React from "react";
 
-function Loved() {
+function Loved({ lovedImgsFromHome }) {
   return (
-    <div className='pt-5'>
-      <p  className='pt-5'>loved</p>
-      {/* <div className="images row m-auto">
-            {lovedImg.map((pic, idx) => {
-              return (
-                <div className="col-md-3 imageCard" key={idx}>
-                  <div>
-                    <img
-                      src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_w.jpg`}
-                      alt={pic.title}
-                    />
+    <div  className={lovedImgsFromHome?.state? "pt-5 homePage" : "pt-5 homePage1"}>
+      <div className="container pt-5">
+        <div className="images row m-auto mt-3">
+          {lovedImgsFromHome?.state
+            ? lovedImgsFromHome.data.map((pic, idx) => {
+                return (
+                  <div className="col-md-3 imageCard" key={idx}>
+                    <div>
+                      <img
+                        src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_w.jpg`}
+                        alt={pic.title}
+                      />
+                    </div>
+                    {/* <button className="loveBtn" onClick={()=>loved(pic.id)}>
+                    {pic.flagIcons ? <i className="fa-solid fa-heart"></i>
+                    :<i className="fa-regular fa-heart"></i>
+                    }
+                  </button> */}
                   </div>
-                  <button onClick={()=>loved(pic)}>L</button>
-                </div>
-              );
-            })}
-          </div> */}
+                );
+              })
+            : <p className="textMsg"> No Images in Loved Page </p>}
+        </div>
+      </div>
     </div>
-  )
+  );
 }
 
-export default Loved
+export default Loved;

@@ -4,23 +4,33 @@ import Home from './Components/Home/Home';
 import Loved from './Components/Loved/Loved';
 import Login from './Components/Login/Login';
 import Notfound from './Components/Notfound/Notfound';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import '../node_modules/bootstrap/dist/js/bootstrap.bundle';
-import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css'
-import Navbar from './Components/Navbar/Navbar';
+
+import Layout from './Components/Layout/Layout';
+import { useState } from 'react';
 
 
 
 
 
 function App() {
+  const [lovedImgsFromHome, setLovedImgsFromHome] =  useState({state:'', data: ""});
+
+
+  function getLovedImagesInApp(results){
+    let Obj={state:false, data: ""};
+    Obj.data = results.data;
+    Obj.state = results.state;
+    setLovedImgsFromHome(Obj);
+  }
   return (
     <div className="App">
-      <Navbar/>
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='loved' element={<Loved />} />
-        <Route path='/login' element={<Login />} />
+        <Route element={<Layout/> }>
+          <Route path='/' element={<Home getLovedImagesInApp={getLovedImagesInApp} />} />
+          <Route path='loved' element={<Loved lovedImgsFromHome={lovedImgsFromHome} />} />
+          <Route index path='/login' element={<Login />} />
+        </Route>
+        
         <Route path='*' element={<Notfound />} />
 
       </Routes>

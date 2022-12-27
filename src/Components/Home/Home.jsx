@@ -3,8 +3,10 @@ import { GlobalContext } from "../../Context/Context";
 import { apiKey, ImageSearch } from "../../Utils/ApiUtils";
 import "./Home.scss";
 
-function Home() {
+function Home({getLovedImagesInApp}) {
   const [query, setQuery] = useState("mountains");
+  const [message, setMsg] = useState("");
+
   const [images, setImages] = useState([]);
   const [flag, setFlag] = useState(false);
   const [lovedImg, setLovedImg] = useState([]);
@@ -15,15 +17,21 @@ function Home() {
   async function getImages(e) {
     e.preventDefault();
     setQuery("");
+    setImages([]);
+    // setFlag(true);
+
     let data = await ImageSearch(query, 100, apiKey);
-    if (data.stat === "ok") {
+    console.log(data.photos.pages);
+    if (data.stat === "ok" && data.photos.pages) {
       data.photos.photo.map((item)=>{
         item.flagIcons = false;
       })
-      setImages(data.photos.photo);
       setFlag(true);
+
+      setImages(data.photos.photo);
     } else {
-      console.log("No Results");
+      setFlag(false);
+      setMsg("No Results coming from this search");
     }
   }
   function loved(id){
@@ -45,16 +53,24 @@ function Home() {
     })
     setImages(_images); 
   }
+  useEffect(()=>{
+    return ()=>{
+      let state =   lovedImg.length ? true: false;
+      let Obj = {state , data:lovedImg }
+      getLovedImagesInApp(Obj);
+    }
+  }, [lovedImg]);
 
   return (
       <div className={flag ? "pt-5 homePage" : "pt-5 homePage1"}>
         <div className="pt-5 container ">
-          <form className="d-flex searchForm" onSubmit={getImages}>
+          <form className="searchForm" onSubmit={getImages}>
             <input type="text" value={query} onChange={searchData} placeholder="Search for Images"/>
             <button type="submit">Search</button>
           </form>
           <div className="images row m-auto mt-3">
-            {images.map((pic, idx) => {
+            {flag ?
+            images.map((pic, idx) => {
               return (
                 <div className="col-md-3 imageCard" key={idx}>
                   <div>
@@ -70,7 +86,8 @@ function Home() {
                   </button>
                 </div>
               );
-            })}
+            }): 
+            <p className="textMsg">{message}</p>}
           </div>
         </div>
       </div>
