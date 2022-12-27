@@ -68,3 +68,15 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+### Home Page 
+this page will have a suggestions, with search about what you want, and when you click on it, it will display the results and hide the suggestions. with like button, when clicking on it will store in array of loved pictures, you can see it in loved page.
+
+
+### Loved Page 
+Loved pics will display in this page, you can see it by going to this page.
+
+
+### Login Page 
+You will login from this page to see to pages and see what pics you love it.

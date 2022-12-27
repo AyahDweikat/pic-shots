@@ -1,0 +1,33 @@
+$colorOne:#243763;
+$colorTwo:#FF6E31;//pics
+$colorThree:#AD8E70;
+$colorFour:#FFEBB7;
+$colorFive:rgb(255, 235, 183, 0.4);
+
+.navbar-brand{
+    font-family: 'Rubik Vinyl', cursive;
+    color:$colorTwo;
+    font-size: 25px;
+    &:hover{
+        color:$colorTwo;
+    }
+    &:focus{
+        color:$colorTwo;
+    }
+}
+.navbar{
+    font-family: 'Andika', sans-serif;
+    background-color: $colorOne !important;
+    .userName{
+        color: $colorTwo;
+    }
+    .nav-link{
+        font-size: 17px;
+        font-weight: 400;
+        color: rgb(252, 226, 219, 0.9) !important;
+        &.active{
+            font-weight: 700;
+            color:$colorFour !important;
+        }
+    }
+}
