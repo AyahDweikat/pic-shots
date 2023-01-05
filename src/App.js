@@ -13,21 +13,12 @@ import { useState } from 'react';
 
 
 function App() {
-  const [lovedImgsFromHome, setLovedImgsFromHome] =  useState({state:'', data: ""});
-
-
-  function getLovedImagesInApp(results){
-    let Obj={state:false, data: ""};
-    Obj.data = results.data;
-    Obj.state = results.state;
-    setLovedImgsFromHome(Obj);
-  }
   return (
     <div className="App">
       <Routes>
         <Route element={<Layout/> }>
-          <Route path='/' element={<Home getLovedImagesInApp={getLovedImagesInApp} />} />
-          <Route path='loved' element={<Loved lovedImgsFromHome={lovedImgsFromHome} />} />
+          <Route path='/' element={<Home />} />
+          <Route path='loved' element={<Loved />} />
           <Route index path='/login' element={<Login />} />
         </Route>
         

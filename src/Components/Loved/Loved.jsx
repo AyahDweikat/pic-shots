@@ -1,6 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
-function Loved({ lovedImgsFromHome }) {
+function Loved() {
+  const [lovedImgsFromHome, setLovedImgsFromHome] = useState({});
+  const [userInfo, setUserInfo] = useState({});
+  const location = useLocation()
+
+  useEffect(()=>{
+    const _userInfo = JSON.parse(localStorage.getItem("userinfo"));
+    setUserInfo(_userInfo);
+    if(!_userInfo){
+      return alert('You are not login, so there is no images in loved folder');
+      // setErrorMsg("You are not login, please log in so you can saved images in loved folder");
+    } else {
+      getLovedImagesInApp();
+    }
+  },[]);
+
+  function getLovedImagesInApp(){
+    let _lovedImgsFromHome = JSON.parse(localStorage.getItem("lovedImgs"));
+    setLovedImgsFromHome(_lovedImgsFromHome);
+  }
   return (
     <div  className={lovedImgsFromHome?.state? "pt-5 homePage" : "pt-5 homePage1"}>
       <div className="container pt-5">

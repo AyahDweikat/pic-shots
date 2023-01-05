@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../../Context/Context';
 import './Login.scss'
 function Login() {
@@ -9,17 +9,19 @@ function Login() {
   const [isWaiting, setIsWaiting] =  useState(false);
   const navigate = useNavigate();
   const {auth} = useContext(GlobalContext);
-
+  const _location = useLocation();
+  console.log(_location);
   async function onFormSubmit(e){
     e.preventDefault();
     setIsWaiting(true);
     const resp = await auth.signin(userName, password);
     if(resp.status === 200){
       setIsWaiting(false);
-      let obj={}
-      obj.name= resp.user.name;
-      obj.token= resp.token;
+      let obj={userName:"", password:"123"}
+      obj.userName= resp.userName;
+      // obj.token= resp.token;
       setUserData(obj);
+      localStorage.setItem("userinfo", JSON.stringify(obj))
       navigate('/');
     } else{
       alert('username or password is wrong !');

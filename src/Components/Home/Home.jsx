@@ -1,15 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { GlobalContext } from "../../Context/Context";
 import { apiKey, ImageSearch } from "../../Utils/ApiUtils";
 import "./Home.scss";
 
-function Home({getLovedImagesInApp}) {
+function Home() {
   const [query, setQuery] = useState("mountains");
-  const [message, setMsg] = useState("");
-
+  const [noImgsMsg, setNoImgsMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const [images, setImages] = useState([]);
   const [flag, setFlag] = useState(false);
   const [lovedImg, setLovedImg] = useState([]);
+  const [userInfo, setUserInfo] = useState({});
   function searchData(e) {
     setQuery(e.target.value);
   }
@@ -18,31 +19,35 @@ function Home({getLovedImagesInApp}) {
     e.preventDefault();
     setQuery("");
     setImages([]);
-    // setFlag(true);
-
     let data = await ImageSearch(query, 100, apiKey);
-    console.log(data.photos.pages);
     if (data.stat === "ok" && data.photos.pages) {
       data.photos.photo.map((item)=>{
         item.flagIcons = false;
       })
       setFlag(true);
-
       setImages(data.photos.photo);
     } else {
       setFlag(false);
-      setMsg("No Results coming from this search");
+      setNoImgsMsg("No Results coming from this search");
     }
   }
   function loved(id){
+    if(!userInfo){
+      alert('You are not login, please log in so you can saved images in loved folder');
+
+      setErrorMsg("You are not login, please log in so you can saved images in loved folder");
+      return 0;
+    }
     let _images = [...images];
     let _lovedImg = [...lovedImg];
     _images.map((pic)=>{
       if(pic.id === id){
-        if(pic.flagIcons=== false){
+        if(pic.flagIcons === false){
           _lovedImg.push(pic);
           setLovedImg(_lovedImg);
-        } else {
+        } 
+        else 
+        {
           let __filteredArr = _lovedImg.filter((item)=>{
             return item.id !==id;
           })
@@ -51,13 +56,18 @@ function Home({getLovedImagesInApp}) {
         return pic.flagIcons = !pic.flagIcons;
       }
     })
-    setImages(_images); 
+    setImages(_images);
   }
   useEffect(()=>{
+    const _userInfo = JSON.parse(localStorage.getItem("userinfo"));
+    setUserInfo(_userInfo);
+    if(userInfo.name === "ayah"){
+      setErrorMsg("");
+    }
     return ()=>{
-      let state =   lovedImg.length ? true: false;
-      let Obj = {state , data:lovedImg }
-      getLovedImagesInApp(Obj);
+      let state = lovedImg.length ? true: false;
+      let obj = {state , data:lovedImg};
+      localStorage.setItem("lovedImgs", JSON.stringify(obj));
     }
   }, [lovedImg]);
 
@@ -68,6 +78,9 @@ function Home({getLovedImagesInApp}) {
             <input type="text" value={query} onChange={searchData} placeholder="Search for Images"/>
             <button type="submit">Search</button>
           </form>
+          <div>
+            <p>{errorMsg}</p>
+          </div>
           <div className="images row m-auto mt-3">
             {flag ?
             images.map((pic, idx) => {
@@ -87,8 +100,9 @@ function Home({getLovedImagesInApp}) {
                 </div>
               );
             }): 
-            <p className="textMsg">{message}</p>}
+            <p className="textMsg">{noImgsMsg}</p>}
           </div>
+          
         </div>
       </div>
   );

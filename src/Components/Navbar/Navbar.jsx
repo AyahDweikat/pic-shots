@@ -1,17 +1,29 @@
-import React, { useContext } from "react";
-import { Link, Navigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import { GlobalContext } from "../../Context/Context";
 import './Navbar.scss'
 function Navbar() {
-  const {auth} = useContext(GlobalContext);
-  console.log(auth);
+  const [userInfo, setUserInfo] = useState({});
+  const [isLogIn, setIsLogin] = useState(false);
+  const location =  useLocation();
+  useEffect(()=>{
+    const _userInfo = JSON.parse(localStorage.getItem("userinfo"));
+    setUserInfo(_userInfo);
+    if(_userInfo){
+      setIsLogin(true);
+    }
+  },[location]);
+
   function onLogout(){
-    if (auth.user) {
-      auth.signout();
+    if (isLogIn) {
+      localStorage.removeItem("userinfo");
+      setUserInfo({});
+      setIsLogin(false);
     } else {
       Navigate("./login");
     }
   }
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg fixed-top">
@@ -45,12 +57,12 @@ function Navbar() {
             </ul>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                {auth.user? <span className="userName">Hello {auth.user.name} </span> :""}
+                {isLogIn? <span className="userName">Hello {userInfo.userName} </span> :""}
                 {/* <Link className="nav-link" to="/login">
                   Login
                   {auth.user? "Logout":"Login"}
                 </Link> */}
-                {auth.user? 
+                {isLogIn? 
                 <Link className="nav-link" to="/login" onClick={onLogout}>
                   Logout
                 </Link>
