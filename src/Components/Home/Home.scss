@@ -63,7 +63,14 @@ $colorFive:rgb(255, 235, 183, 0.4);
     }
 }
 
-
+.title{
+    font-size: 26px;
+    font-weight: 400;
+    text-align: left;
+    padding-left: 15px;
+    color:$colorOne;
+    font-family: 'Rubik Bubbles', cursive;
+}
 .images{
     font-family: 'Andika', sans-serif;
     display: flex;
@@ -74,6 +81,25 @@ $colorFive:rgb(255, 235, 183, 0.4);
         font-size: 25px;
         margin-top: 50px;
     }
+    // .suggestion{
+        // position: relative;
+        // color:transparent;
+        // font-size: 20px;
+        // .nameHover{
+        //     display: inline-block;
+        //     position: absolute;
+        //     top:45%;
+        //     left:40%;
+        // }
+        // &:hover{
+        //     color:$colorFour;
+        //     // opacity:0.3;
+        // }
+        // img:hover{
+        //     opacity:0.3;
+        //     color:$colorFour;
+        // }
+    // } 
     .imageCard{
         width: 24%;
         padding: 5px;
@@ -97,7 +123,6 @@ $colorFive:rgb(255, 235, 183, 0.4);
         }
     }
 }
-
 .loveBtn{
     margin-top: 8px;
     font-size: 20px;
@@ -114,4 +139,67 @@ $colorFive:rgb(255, 235, 183, 0.4);
         -o-transform:scale(1.3, 1.3) ;
         border: transparent;
     }
+}
+
+
+.member{
+    width:100%;
+    font-size: 24px;
+    text-align: center;
+    border: 2px solid #fff;
+    position: relative;
+    overflow: hidden;
+}
+// .titleHover{
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     height: 100%;
+// }
+.member img{
+    width:100%;
+    transition: transform 1s;
+}
+.member:hover img{
+    transform: scale(1.2);
+}
+
+
+.nameHover{
+    padding-top: 80px;
+    background-color: rgb(36, 55, 99, 0.8);
+    color:white;
+    position: absolute;
+    top:0;
+    left:100%;
+    width:100%;
+    height: 100%;
+    opacity: 0;
+    transition: all 1s;
+    overflow: hidden;
+}
+.nameHover span{
+    font-size: 20px;
+    position: relative;
+    left:100%;
+    top:50%;
+    transition: left 1s 2.5s;
+    -webkit-transition: left 1s 2.5s;
+    -moz-transition: left 1s 2.5s;
+    -ms-transition: left 1s 2.5s;
+    -o-transition: left 1s 2.5s;
+}
+.nameHover:hover span{
+    left:0;
+    top: 50%;
+}
+.member:hover .nameHover{
+    left:0;
+    opacity: 1;
+    padding-top: 80px;
+    transform:skewY(12);
+    -webkit-transform:skewY(12);
+    -moz-transform:skewY(12);
+    -ms-transform:skewY(12);
+    -o-transform:skewY(12);
 }
