@@ -3,11 +3,14 @@ import { GlobalContext } from "../../Context/Context";
 import { apiKey, ImageSearch } from "../../Utils/ApiUtils";
 import "./Home.scss";
 import { getFirstImg } from './../../Utils/ApiUtils';
+// import SweetAlert from "react-swal";
+import Swal from "sweetalert2";
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function Home() {
   const [query, setQuery] = useState("mountains");
   const [noImgsMsg, setNoImgsMsg] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
+  // const [errorMsg, setErrorMsg] = useState("");
   const [images, setImages] = useState([]);
   const [flag, setFlag] = useState(false);
   const [flagSug, setFlagSug] = useState(true);
@@ -27,6 +30,9 @@ function Home() {
   const [lovedImg, setLovedImg] = useState([]);
   const [userInfo, setUserInfo] = useState({});
   const [suggestions, setSuggestions] = useState([{}]);
+  const navigate = useNavigate()
+
+
 
   function searchData(e) {
     setQuery(e.target.value);
@@ -47,10 +53,26 @@ function Home() {
       setImages(data.photo);
     } else {
       setFlag(false);
-      setNoImgsMsg("No Results coming from this search");
+      showAlertNoResult();
     }
   }
-
+  function showAlertNoResult (){
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'No results from this search!',
+    });
+  }
+  function showAlertNotLogin(){
+    Swal.fire({
+      icon: 'error',
+      title: 'You are not login!',
+      text: 'Go to login?',
+    }).then(function () {
+        // Redirect the user
+        navigate('./Login')
+      });
+  }
   async function getSuggest(){
     const resultArray = await Promise.all(suggArr.map(async (name) => {
       return {
@@ -82,13 +104,13 @@ function Home() {
 
   function loved(id) {
     if (!userInfo) {
-      alert(
-        "You are not login, please log in so you can saved images in loved folder"
-      );
-
-      setErrorMsg(
-        "You are not login, please log in so you can saved images in loved folder"
-      );
+      // alert(
+      //   "You are not login, please log in so you can saved images in loved folder"
+      // );
+      showAlertNotLogin()
+      // setErrorMsg(
+      //   "You are not login, please log in so you can saved images in loved folder"
+      // );
       return 0;
     }
     let _images = [...images];
@@ -113,7 +135,8 @@ function Home() {
     const _userInfo = JSON.parse(localStorage.getItem("userinfo"));
     setUserInfo(_userInfo);
     if (userInfo.name === "ayah") {
-      setErrorMsg("");
+      showAlertNotLogin()
+      // setErrorMsg("");
     }
     return () => {
       let state = lovedImg.length ? true : false;
@@ -134,9 +157,7 @@ function Home() {
           />
           <button type="submit">Search</button>
         </form>
-        <div>
-          <p>{errorMsg}</p>
-        </div>
+
         <div className="images row m-auto mt-3">
           {flag ? (
             images.map((pic, idx) => {
@@ -158,9 +179,10 @@ function Home() {
                 </div>
               );
             })
-          ) : (
-            <p className="textMsg">{noImgsMsg}</p>
-          )}
+          ) : (""
+            // <p className="textMsg">{noImgsMsg}</p>
+          )
+          }
         </div>
       </div>
       <div>
