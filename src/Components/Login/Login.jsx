@@ -19,7 +19,6 @@ function Login() {
       setIsWaiting(false);
       let obj={userName:"", password:"123"}
       obj.userName= resp.userName;
-      // obj.token= resp.token;
       setUserData(obj);
       localStorage.setItem("userinfo", JSON.stringify(obj))
       navigate('/');

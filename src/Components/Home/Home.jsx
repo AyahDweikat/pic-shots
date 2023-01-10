@@ -1,19 +1,16 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../Context/Context";
 import { apiKey, ImageSearch } from "../../Utils/ApiUtils";
 import "./Home.scss";
-import { getFirstImg } from './../../Utils/ApiUtils';
-// import SweetAlert from "react-swal";
 import Swal from "sweetalert2";
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+
 
 function Home() {
   const [query, setQuery] = useState("mountains");
-  const [noImgsMsg, setNoImgsMsg] = useState("");
-  // const [errorMsg, setErrorMsg] = useState("");
   const [images, setImages] = useState([]);
   const [flag, setFlag] = useState(false);
-  const [flagSug, setFlagSug] = useState(true);
   const [suggArr, setSugg] = useState([
     "mountains",
     "flowers",
@@ -37,13 +34,19 @@ function Home() {
   function searchData(e) {
     setQuery(e.target.value);
   }
-
+  function addtoSuggestion(queryToSugg){
+    let _suggArr = [...suggArr];
+    if(!_suggArr.includes(queryToSugg)){
+      _suggArr.unshift(queryToSugg);
+    }
+    setSugg(_suggArr);
+  }
   async function getImages(e, item, num) {
     e.preventDefault();
-    setQuery("");
+    addtoSuggestion(item)
     setImages([]);
-    setSuggestions([]);
-    setFlagSug(false);
+    // setSuggestions([]);
+    setFlag(true)
     let { data, status } = await ImageSearch(item, num, apiKey);
     if (status === 200 && data.pages) {
       data.photo.map((item) => {
@@ -51,6 +54,8 @@ function Home() {
       });
       setFlag(true);
       setImages(data.photo);
+      setQuery("");
+      setSuggestions([]);
     } else {
       setFlag(false);
       showAlertNoResult();
@@ -62,6 +67,7 @@ function Home() {
       title: 'Oops...',
       text: 'No results from this search!',
     });
+    getSuggest();
   }
   function showAlertNotLogin(){
     Swal.fire({
@@ -70,7 +76,7 @@ function Home() {
       text: 'Go to login?',
     }).then(function () {
         // Redirect the user
-        navigate('./Login')
+        navigate('/Login')
       });
   }
   async function getSuggest(){
@@ -89,10 +95,14 @@ function Home() {
     });
     setSuggestions(_arr)
   }
-
+  function goToSuggestions(e){
+    e.preventDefault()
+    getSuggest();
+    setFlag(false);
+  }
   useEffect(()=>{
     getSuggest();
-    setFlagSug(true);
+    setFlag(false)
   },[])
   console.log(suggestions);
 
@@ -104,13 +114,7 @@ function Home() {
 
   function loved(id) {
     if (!userInfo) {
-      // alert(
-      //   "You are not login, please log in so you can saved images in loved folder"
-      // );
       showAlertNotLogin()
-      // setErrorMsg(
-      //   "You are not login, please log in so you can saved images in loved folder"
-      // );
       return 0;
     }
     let _images = [...images];
@@ -135,8 +139,7 @@ function Home() {
     const _userInfo = JSON.parse(localStorage.getItem("userinfo"));
     setUserInfo(_userInfo);
     if (userInfo.name === "ayah") {
-      showAlertNotLogin()
-      // setErrorMsg("");
+      showAlertNotLogin();
     }
     return () => {
       let state = lovedImg.length ? true : false;
@@ -156,6 +159,7 @@ function Home() {
             placeholder="Search for Images"
           />
           <button type="submit">Search</button>
+          <button onClick={goToSuggestions} className="mx-3 ms-auto" >Suggestions</button>
         </form>
 
         <div className="images row m-auto mt-3">
@@ -179,16 +183,9 @@ function Home() {
                 </div>
               );
             })
-          ) : (""
-            // <p className="textMsg">{noImgsMsg}</p>
-          )
-          }
-        </div>
-      </div>
-      <div>
-        {flagSug?<p className="title">Suggestions</p>:""}
-        <div>
-          <div className="images row m-auto">
+          ) : (
+            <div className="images row m-auto">
+              <p className="title">Suggestions</p>
             {(suggestions)?
             suggestions.map((item, idx) => {
               return (
@@ -201,12 +198,13 @@ function Home() {
                       <div className="titleHover">
                         <span class="nameHover">{item.name}</span>
                       </div>
-
                     </div>
                 </div>
               );
-            }):<p>Nothing</p>}
+            }):""}
           </div>
+          )
+          }
         </div>
       </div>
     </div>

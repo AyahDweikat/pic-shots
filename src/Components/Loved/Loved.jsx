@@ -1,21 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function Loved() {
   const [lovedImgsFromHome, setLovedImgsFromHome] = useState({});
   const [userInfo, setUserInfo] = useState({});
-  const location = useLocation()
+  const navigate = useNavigate()
 
   useEffect(()=>{
     const _userInfo = JSON.parse(localStorage.getItem("userinfo"));
     setUserInfo(_userInfo);
     if(!_userInfo){
-      return alert('You are not login, so there is no images in loved folder');
-      // setErrorMsg("You are not login, please log in so you can saved images in loved folder");
+      showAlertNotLogin()
     } else {
       getLovedImagesInApp();
     }
   },[]);
+  
+  function showAlertNotLogin(){
+    Swal.fire({
+      icon: 'error',
+      title: 'You are not login!',
+      text: 'Go to login?',
+    }).then(function () {
+        // Redirect the user
+        navigate('/Login')
+      });
+  }
 
   function getLovedImagesInApp(){
     let _lovedImgsFromHome = JSON.parse(localStorage.getItem("lovedImgs"));

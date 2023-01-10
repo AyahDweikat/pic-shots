@@ -1,0 +1,20 @@
+$colorOne:#243763;
+$colorTwo:#FF6E31;//pics
+$colorThree:#AD8E70;
+$colorFour:#ffebb7;
+$colorFive:rgb(255, 235, 183, 0.4);
+
+.NotFoundPage{
+    background-color: $colorFive;
+    height:100vh;
+    display: flex;
+    justify-content: center;
+    .notFoundMsg{
+        font-family: 'Rubik Bubbles', cursive;
+        font-size: 40px;
+        font-weight: 400;
+        padding-top: 250px;
+    }
+}
+
+

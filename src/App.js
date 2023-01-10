@@ -20,9 +20,10 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='loved' element={<Loved />} />
           <Route index path='/login' element={<Login />} />
+          <Route path='*' element={<Notfound />} />
+
         </Route>
         
-        <Route path='*' element={<Notfound />} />
 
       </Routes>
     </div>

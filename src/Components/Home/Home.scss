@@ -81,25 +81,7 @@ $colorFive:rgb(255, 235, 183, 0.4);
         font-size: 25px;
         margin-top: 50px;
     }
-    // .suggestion{
-        // position: relative;
-        // color:transparent;
-        // font-size: 20px;
-        // .nameHover{
-        //     display: inline-block;
-        //     position: absolute;
-        //     top:45%;
-        //     left:40%;
-        // }
-        // &:hover{
-        //     color:$colorFour;
-        //     // opacity:0.3;
-        // }
-        // img:hover{
-        //     opacity:0.3;
-        //     color:$colorFour;
-        // }
-    // } 
+    
     .imageCard{
         width: 24%;
         padding: 5px;
@@ -150,12 +132,7 @@ $colorFive:rgb(255, 235, 183, 0.4);
     position: relative;
     overflow: hidden;
 }
-// .titleHover{
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     height: 100%;
-// }
+
 .member img{
     width:100%;
     transition: transform 1s;

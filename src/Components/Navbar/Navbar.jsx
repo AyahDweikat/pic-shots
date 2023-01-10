@@ -13,7 +13,6 @@ function Navbar() {
       setIsLogin(true);
     }
   },[location]);
-
   function onLogout(){
     if (isLogIn) {
       localStorage.removeItem("userinfo");
@@ -23,7 +22,6 @@ function Navbar() {
       Navigate("./login");
     }
   }
-
   return (
     <div>
       <nav className="navbar navbar-expand-lg fixed-top">
@@ -58,10 +56,6 @@ function Navbar() {
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 {isLogIn? <span className="userName">Hello {userInfo.userName} </span> :""}
-                {/* <Link className="nav-link" to="/login">
-                  Login
-                  {auth.user? "Logout":"Login"}
-                </Link> */}
                 {isLogIn? 
                 <Link className="nav-link" to="/login" onClick={onLogout}>
                   Logout
@@ -71,8 +65,6 @@ function Navbar() {
                   Login
                 </Link>
                 }
-
-
               </li>
             </ul>
           </div>
