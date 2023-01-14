@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Navigate, useLocation } from "react-router-dom";
-import { GlobalContext } from "../../Context/Context";
-import './Navbar.scss'
+import './Navbar.scss';
+
 function Navbar() {
   const [userInfo, setUserInfo] = useState({});
   const [isLogIn, setIsLogin] = useState(false);

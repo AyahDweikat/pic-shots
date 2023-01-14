@@ -46,11 +46,6 @@ function Loved() {
                         alt={pic.title}
                       />
                     </div>
-                    {/* <button className="loveBtn" onClick={()=>loved(pic.id)}>
-                    {pic.flagIcons ? <i className="fa-solid fa-heart"></i>
-                    :<i className="fa-regular fa-heart"></i>
-                    }
-                  </button> */}
                   </div>
                 );
               })

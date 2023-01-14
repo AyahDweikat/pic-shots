@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import { GlobalContext } from "../../Context/Context";
+import React, { useEffect, useState } from "react";
 import { apiKey, ImageSearch } from "../../Utils/ApiUtils";
 import "./Home.scss";
 import Swal from "sweetalert2";
@@ -8,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 function Home() {
-  const [query, setQuery] = useState("mountains");
+  const [query, setQuery] = useState("");
   const [images, setImages] = useState([]);
   const [flag, setFlag] = useState(false);
   const [suggArr, setSugg] = useState([
@@ -23,6 +22,7 @@ function Home() {
     "paris",
     "roma",
     "newyork",
+    "seoul"
   ]);
   const [lovedImg, setLovedImg] = useState([]);
   const [userInfo, setUserInfo] = useState({});
@@ -34,19 +34,11 @@ function Home() {
   function searchData(e) {
     setQuery(e.target.value);
   }
-  function addtoSuggestion(queryToSugg){
-    let _suggArr = [...suggArr];
-    if(!_suggArr.includes(queryToSugg)){
-      _suggArr.unshift(queryToSugg);
-    }
-    setSugg(_suggArr);
-  }
   async function getImages(e, item, num) {
     e.preventDefault();
-    addtoSuggestion(item)
+    addtoSuggestion(item);
     setImages([]);
-    // setSuggestions([]);
-    setFlag(true)
+    setFlag(true);
     let { data, status } = await ImageSearch(item, num, apiKey);
     if (status === 200 && data.pages) {
       data.photo.map((item) => {
@@ -75,9 +67,15 @@ function Home() {
       title: 'You are not login!',
       text: 'Go to login?',
     }).then(function () {
-        // Redirect the user
         navigate('/Login')
       });
+  }
+  function addtoSuggestion(queryToSugg){
+    let _suggArr = [...suggArr];
+    if(!_suggArr.includes(queryToSugg)){
+      _suggArr.unshift(queryToSugg);
+    }
+    setSugg(_suggArr);
   }
   async function getSuggest(){
     const resultArray = await Promise.all(suggArr.map(async (name) => {
@@ -93,7 +91,7 @@ function Home() {
         pic : item.data.data.photo[0]
       }
     });
-    setSuggestions(_arr)
+    setSuggestions(_arr);
   }
   function goToSuggestions(e){
     e.preventDefault()
@@ -104,13 +102,6 @@ function Home() {
     getSuggest();
     setFlag(false)
   },[])
-  console.log(suggestions);
-
-
-
-
-
-
 
   function loved(id) {
     if (!userInfo) {

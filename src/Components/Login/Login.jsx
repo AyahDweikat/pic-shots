@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { GlobalContext } from '../../Context/Context';
 import './Login.scss'
 function Login() {
@@ -10,7 +11,15 @@ function Login() {
   const navigate = useNavigate();
   const {auth} = useContext(GlobalContext);
   const _location = useLocation();
-  console.log(_location);
+
+  function showAlertErrorLogin(){
+    Swal.fire({
+      icon: 'error',
+      title: 'OOps',
+      text: 'username or password is wrong',
+    })
+  }
+
   async function onFormSubmit(e){
     e.preventDefault();
     setIsWaiting(true);
@@ -23,8 +32,8 @@ function Login() {
       localStorage.setItem("userinfo", JSON.stringify(obj))
       navigate('/');
     } else{
-      alert('username or password is wrong !');
       setIsWaiting(false);
+      showAlertErrorLogin()
     }
   }
 
