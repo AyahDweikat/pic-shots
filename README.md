@@ -72,11 +72,13 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ### Home Page 
 this page will have a suggestions, with search about what you want, and when you click on it, it will display the results and hide the suggestions. with like button, when clicking on it will store in page of loved pictures, you can see it in loved page.
-PageScreen = `./public/ImagesForPages/HomePage.PNG`
+![HomePage](https://user-images.githubusercontent.com/98915307/213773239-4034a9fb-a4c0-458b-b020-f85674e15e02.PNG)
 
 ### Loved Page 
 Loved pics will display in this page, you can see it by going to this page and be login to your user. 
-PageScreen = `./public/ImagesForPages/LovedPage.PNG`
+![LovedPage](https://user-images.githubusercontent.com/98915307/213773276-83c18d71-d6de-45fa-bbfa-b25c3e628137.PNG)
+
 ### Login Page 
 You will login from this page to see to pages and see what pics you love it.
-PageScreen = `./public/ImagesForPages/loginPage.PNG`
+![loginPage](https://user-images.githubusercontent.com/98915307/213773320-01609f1a-9964-4c2d-8797-604392792b64.PNG)
+
